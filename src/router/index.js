@@ -55,27 +55,27 @@ export const constantRoutes = [
     }]
   },
 
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/table',
-  //   name: 'Example',
-  //   meta: { title: 'Example', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'table',
-  //       name: 'Table',
-  //       component: () => import('@/views/table/index'),
-  //       meta: { title: 'Table', icon: 'table' }
-  //     },
-  //     {
-  //       path: 'tree',
-  //       name: 'Tree',
-  //       component: () => import('@/views/tree/index'),
-  //       meta: { title: 'Tree', icon: 'tree' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/class',
+    component: Layout,
+    redirect: '/class/index',
+    name: 'Class',
+    meta: { title: '班课', icon: 'example' },
+    children: [
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/class/index'),
+        meta: { title: '班课查询', icon: 'table' }
+      },
+      {
+        path: 'create',
+        name: 'Create',
+        component: () => import('@/views/class/create'),
+        meta: { title: '创建班课', icon: 'tree' }
+      }
+    ]
+  },
 
   // {
   //   path: '/form',
