@@ -36,10 +36,15 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
+  {
+    path: '/forgetPwd',
+    component: () => import('@/views/forget-pwd/index'),
+    hidden: true
+  },
 
   {
     path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import('@/views/error-page/404'),
     hidden: true
   },
 
@@ -77,18 +82,18 @@ export const constantRoutes = [
     ]
   },
 
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/form',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/error-page/500'),
+        meta: { title: 'Form', icon: 'form' }
+      }
+    ]
+  },
 
   // {
   //   path: '/nested',
