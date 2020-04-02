@@ -97,12 +97,14 @@ export default {
     },
     onSubmit() {
       this.$message('submit!')
+      this.$router.push('/class')
     },
     onCancel() {
       this.$message({
         message: 'cancel!',
         type: 'warning'
       })
+      this.$router.push('/class')
     }
   }
 }
@@ -123,6 +125,8 @@ export default {
       border-color: #409EFF;
     }
     .avatar-uploader-icon {
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
       font-size: 28px;
       color: #8c939d;
       width: 178px;

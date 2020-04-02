@@ -81,19 +81,46 @@ export const constantRoutes = [
       }
     ]
   },
-
   {
-    path: '/form',
+    path: '/profile',
     component: Layout,
+    redirect: '/profile/index',
+    name: 'Profile',
+    meta: { title: '个人中心', icon: 'user' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/error-page/500'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'resource',
+        name: 'Resource',
+        component: () => import('@/views/resource/index'),
+        meta: { title: '资源', icon: 'search' }
+      },
+      {
+        path: 'info',
+        name: 'Info',
+        component: () => import('@/views/profile/index'),
+        meta: { title: '用户信息', icon: 'skill' }
+      },
+      {
+        path: 'setting',
+        name: 'Setting',
+        component: () => import('@/views/profile/setting'),
+        meta: { title: '设置', icon: 'edit' }
       }
     ]
   },
+
+  // {
+  //   path: '/form',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Form',
+  //       component: () => import('@/views/error-page/500'),
+  //       meta: { title: 'Form', icon: 'form' }
+  //     }
+  //   ]
+  // },
 
   // {
   //   path: '/nested',

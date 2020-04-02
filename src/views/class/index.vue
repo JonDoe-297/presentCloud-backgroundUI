@@ -3,7 +3,9 @@
     <el-row style="margin-bottom: 15px; float: right">
       <el-col :span="24">
         <el-button type="success" round icon="el-icon-search">搜索</el-button>
-        <el-button type="primary" round>创建班课</el-button>
+        <router-link to='/class/create'>
+          <el-button type="primary" round>创建班课</el-button>
+        </router-link>
       </el-col>
     </el-row>
     <el-table
