@@ -82,6 +82,21 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/dataDict',
+    component: Layout,
+    redirect: '/dataDict/index',
+    name: 'DataDict',
+    meta: { title: '数据字典', icon: 'example' },
+    children: [
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/data-dictionary/index'),
+        meta: { title: '数据字典', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',
