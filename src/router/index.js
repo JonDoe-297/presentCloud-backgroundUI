@@ -41,7 +41,11 @@ export const constantRoutes = [
     component: () => import('@/views/forget-pwd/index'),
     hidden: true
   },
-
+  {
+    path: '/register',
+    component: () => import('@/views/register/index'),
+    hidden: true
+  },
   {
     path: '/404',
     component: () => import('@/views/error-page/404'),

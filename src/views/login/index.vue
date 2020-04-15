@@ -49,8 +49,10 @@
           <el-button class="forget-password" type="text" @click="handleForgetPwd">忘记密码</el-button>
         </el-col>
       </el-row>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-row :gutter="20">
+        <el-col :span="12"><el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button></el-col>
+        <el-col :span="12"><el-button :loading="loading" type="info" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleRegister">注册</el-button></el-col>
+      </el-row>
 
       <!--<div class="tips">-->
         <!--<span style="margin-right:20px;">username: admin</span>-->
@@ -130,6 +132,9 @@ export default {
           return false
         }
       })
+    },
+    handleRegister() {
+      this.$router.push('/register')
     },
     handleForgetPwd() {
       this.$router.push('/forgetPwd')
