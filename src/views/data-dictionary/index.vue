@@ -1,34 +1,28 @@
 <template>
   <div class="app-container">
-    <el-select v-model="value" placeholder="请选择">
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-      </el-option>
-    </el-select>
+    <!--<el-select v-model="value" placeholder="请选择">-->
+      <!--<el-option-->
+        <!--v-for="item in options"-->
+        <!--:key="item.value"-->
+        <!--:label="item.label"-->
+        <!--:value="item.value">-->
+      <!--</el-option>-->
+    <!--</el-select>-->
     <el-button style="float: right" type="primary" @click="dialogFormVisible = true">新增</el-button>
     <el-dialog title="数据字典" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="字典码" :label-width="formLabelWidth">
           <el-input v-model="form.code" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="用途描述" :label-width="formLabelWidth">
-          <el-input v-model="form.detail" autocomplete="off"></el-input>
-        </el-form-item>
         <el-form-item label="字典名称" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="是否为默认值" :label-width="formLabelWidth">
-          <el-checkbox v-model="form.default"></el-checkbox>
-        </el-form-item>
-        <el-form-item label="排序" :label-width="formLabelWidth">
-          <el-input v-model="form.order" autocomplete="off"></el-input>
+        <el-form-item label="用途描述" :label-width="formLabelWidth">
+          <el-input v-model="form.detail" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="dialogFormVisible = false;form = {}">取 消</el-button>
         <el-button v-if="isCrete" type="primary" @click="handleCreate(form)">确 定</el-button>
         <el-button v-else type="primary" @click="handleUpdate(form)">确 定</el-button>
       </div>
@@ -41,54 +35,41 @@
         label="字典码">
       </el-table-column>
       <el-table-column
-        prop="detail"
-        label="用途描述">
-      </el-table-column>
-      <el-table-column
         prop="name"
         label="字典名称">
       </el-table-column>
       <el-table-column
-        prop="defaultValue"
-        label="默认值">
-        <template scope="scope">
-          <i v-if="scope.row.defaultValue == true" class="el-icon-check"></i>
-          <!--<i v-else class="el-icon-close"></i>-->
-          <!--<el-checkbox v-model="scope.row.defaultValue"></el-checkbox>-->
-        </template>
-
-        <!--<el-checkbox v-model="defaultValue"></el-checkbox>-->
-        <!--<el-radio v-model="defaultValue" label="1"></el-radio>-->
-      </el-table-column>
-      <el-table-column
-        prop="order"
-        label="排序">
+        prop="detail"
+        label="用途描述">
       </el-table-column>
       <el-table-column
         fixed="right"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="handleDelete(false, scope.$index)" type="danger" size="small" >删除</el-button>
+          <el-button icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)" type="text" size="small">编辑</el-button>
+          <!--<side-list></side-list>-->
+          <el-button icon="el-icon-setting" @click="handleSetting(scope.$index, scope.row)" type="text" size="small">字典配置</el-button>
+          <el-popconfirm
+            title="这是一段内容确定删除吗？"
+            @onConfirm="handleDelete(true)"
+          >
+            <el-button icon="el-icon-delete" slot="reference" style="margin-left: 10px" @click="handleDelete(false, scope.$index)" type="danger" size="small" >删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog
-      title="提示"
-      :visible.sync="deleteVisible"
-      width="30%">
-      <span>是否删除该字段？</span>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="deleteVisible = false">取 消</el-button>
-    <el-button type="primary" @click="handleDelete(true)">确 定</el-button>
-  </span>
-    </el-dialog>
+    <side-list :display="sideListDisplay" :code="codeDictionary" @sideListDisplay="handleSideList($event)"></side-list>
   </div>
 </template>
 
 <script>
+import SideList from './component/SideList'
+
 export default {
   name: 'Index',
+  components: {
+    SideList
+  },
   data() {
     return {
       options: [{
@@ -105,69 +86,67 @@ export default {
       form: {
         code: '',
         name: '',
-        detail: '',
-        default: false,
-        order: 0
+        detail: ''
       },
-      formLabelWidth: '120px',
       tableData: [{
-        code: 'YanJiuSheng',
-        name: '研究生',
-        detail: '研究生学历',
-        defaultValue: false,
-        order: 0
+        code: 'edu_background',
+        name: '教育背景',
+        detail: '学位学历'
       }, {
-        code: 'DaXueSheng',
-        name: '大学生',
-        detail: '大学学历',
-        defaultValue: true,
-        order: 1
+        code: 'nation',
+        name: '民族',
+        detail: ''
       }, {
-        code: 'GaoZhongSheng',
-        name: '高中生',
-        detail: '高中学历',
-        defaultValue: false,
-        order: 2
+        code: 'msg_category',
+        name: '通告类型',
+        detail: '消息类型1:通知公告2:系统消息'
       }, {
-        code: 'ChuZhongSheng',
-        name: '初中生',
-        detail: '初中学历',
-        defaultValue: false,
-        order: 3
+        code: 'sex',
+        name: '性别',
+        detail: '性别 男 女'
       }],
       // defaultValue: '1',
+      formLabelWidth: '120px',
       dialogFormVisible: false,
-      deleteVisible: false,
       currentIndex: 0,
-      isCrete: true
+      isCrete: true,
+      sideListDisplay: false,
+      codeDictionary: ''
     }
   },
   methods: {
+    handleSetting(index, row) {
+      this.codeDictionary = row.code
+      this.sideListDisplay = true
+      // console.log(this.sideListDisplay)
+    },
+    handleSideList(bol) {
+      this.sideListDisplay = bol
+    },
     handleDelete(bol, index) {
       if (bol) {
         this.tableData.splice(this.currentIndex, 1)
-        this.deleteVisible = false
       } else {
         this.currentIndex = index
-        this.deleteVisible = true
       }
     },
     handleCreate(form) {
       this.tableData.push(form)
+      console.log(this.tableData)
       this.dialogFormVisible = false
       this.isCrete = true
+      this.form = {}
     },
     handleEdit(index, row) {
       this.dialogFormVisible = true
       this.currentIndex = index
       this.form = row
       this.isCrete = false
-      // console.log(row)
     },
     handleUpdate(form) {
       this.tableData[this.currentIndex] = form
       this.dialogFormVisible = false
-      // console.log(row)
+      this.form = {}
     }
   }
 }
