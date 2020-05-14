@@ -1,23 +1,23 @@
 <template>
   <div class="app-container">
     <!--<el-select v-model="value" placeholder="请选择">-->
-      <!--<el-option-->
-        <!--v-for="item in options"-->
-        <!--:key="item.value"-->
-        <!--:label="item.label"-->
-        <!--:value="item.value">-->
-      <!--</el-option>-->
+    <!--<el-option-->
+    <!--v-for="item in options"-->
+    <!--:key="item.value"-->
+    <!--:label="item.label"-->
+    <!--:value="item.value">-->
+    <!--</el-option>-->
     <!--</el-select>-->
-    <el-button style="float: right" type="primary" @click="dialogFormVisible = true">新增</el-button>
-    <el-dialog title="数据字典" :visible.sync="dialogFormVisible">
+    <el-button style="float: right" type="primary" @click="dialogFormVisible = true; isCrete = true">新增角色</el-button>
+    <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
       <el-form :model="form">
-        <el-form-item label="字典码" :label-width="formLabelWidth">
-          <el-input v-model="form.code" autocomplete="off"></el-input>
+        <el-form-item label="角色编码" :label-width="formLabelWidth">
+          <el-input v-model="form.code" autocomplete="off" v-bind:disabled="!isCrete"></el-input>
         </el-form-item>
-        <el-form-item label="字典名称" :label-width="formLabelWidth">
+        <el-form-item label="角色名称" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="用途描述" :label-width="formLabelWidth">
+        <el-form-item label="描述" :label-width="formLabelWidth">
           <el-input v-model="form.detail" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -32,15 +32,11 @@
       style="width: 100%">
       <el-table-column
         prop="code"
-        label="字典码">
+        label="角色码">
       </el-table-column>
       <el-table-column
         prop="name"
-        label="字典名称">
-      </el-table-column>
-      <el-table-column
-        prop="detail"
-        label="用途描述">
+        label="角色名称">
       </el-table-column>
       <el-table-column
         fixed="right"
@@ -48,7 +44,7 @@
         <template slot-scope="scope">
           <el-button icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)" type="text" size="small">编辑</el-button>
           <!--<side-list></side-list>-->
-          <el-button icon="el-icon-setting" @click="handleSetting(scope.$index, scope.row)" type="text" size="small">字典配置</el-button>
+          <el-button icon="el-icon-user" @click="handleRole(scope.$index, scope.row)" type="text" size="small">用户</el-button>
           <el-popconfirm
             title="确定删除吗？"
             @onConfirm="handleDelete(true)"
@@ -63,7 +59,7 @@
 </template>
 
 <script>
-import SideList from './component/SideList'
+import SideList from './component/roleSideList'
 
 export default {
   name: 'Index',
@@ -89,21 +85,17 @@ export default {
         detail: ''
       },
       tableData: [{
-        code: 'edu_background',
-        name: '教育背景',
-        detail: '学位学历'
+        code: 'test',
+        name: '临时角色',
+        detail: '临时账号'
       }, {
-        code: 'nation',
-        name: '民族',
+        code: 'admin',
+        name: '管理员',
+        detail: '管理员'
+      }, {
+        code: 'teacher',
+        name: '教师',
         detail: ''
-      }, {
-        code: 'msg_category',
-        name: '通告类型',
-        detail: '消息类型1:通知公告2:系统消息'
-      }, {
-        code: 'sex',
-        name: '性别',
-        detail: '性别 男 女'
       }],
       // defaultValue: '1',
       formLabelWidth: '120px',
@@ -115,7 +107,7 @@ export default {
     }
   },
   methods: {
-    handleSetting(index, row) {
+    handleRole(index, row) {
       this.codeDictionary = row.code
       this.sideListDisplay = true
       // console.log(this.sideListDisplay)
@@ -134,7 +126,7 @@ export default {
       this.tableData.push(form)
       console.log(this.tableData)
       this.dialogFormVisible = false
-      this.isCrete = true
+      // this.isCrete = true
       this.form = {}
     },
     handleEdit(index, row) {

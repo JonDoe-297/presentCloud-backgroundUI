@@ -86,17 +86,41 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/dataDict',
+    path: '/systemManage',
     component: Layout,
-    redirect: '/dataDict/index',
-    name: 'DataDict',
-    meta: { title: '数据字典', icon: 'example' },
+    redirect: '/systemManage/dataDict',
+    name: 'SystemManage',
+    meta: { title: '系统管理', icon: 'edit' },
     children: [
       {
-        path: 'index',
-        name: 'Index',
+        path: 'dataDict',
+        name: 'DataDict',
         component: () => import('@/views/data-dictionary/index'),
         meta: { title: '数据字典', icon: 'table' }
+      },
+      {
+        path: 'parameter',
+        name: 'Parameter',
+        component: () => import('@/views/parameter-management/index'),
+        meta: { title: '参数管理', icon: 'table' }
+      },
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/user-management/index'),
+        meta: { title: '用户管理', icon: 'user' }
+      },
+      {
+        path: 'menuManage',
+        name: 'MenuManage',
+        component: () => import('@/views/menu-management/index'),
+        meta: { title: '菜单管理', icon: 'list' }
+      },
+      {
+        path: 'roleUser',
+        name: 'RoleUser',
+        component: () => import('@/views/role-management/index'),
+        meta: { title: '角色管理', icon: 'people' }
       }
     ]
   },

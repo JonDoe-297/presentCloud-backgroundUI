@@ -95,6 +95,8 @@ export default {
         label: '福建农林大学'
       }],
       schoolValue: '',
+      facultyValue: '',
+      imageUrl: '',
       facultyOptions: [{
         value: '选项1',
         label: '数学与计算机工程学院'
