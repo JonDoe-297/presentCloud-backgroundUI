@@ -30,12 +30,15 @@ export default {
   methods: {
     handleSave() {
       this.$message({
-        message: 'success！',
+        message: '保存成功！',
         type: 'success'
       })
     },
     handleReset() {
-      this.form = {}
+      this.form = {
+        value: 2,
+        distance: 50
+      }
     }
   }
 }

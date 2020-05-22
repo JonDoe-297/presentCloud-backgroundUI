@@ -1,13 +1,5 @@
 <template>
   <div class="app-container">
-    <!--<el-select v-model="value" placeholder="请选择">-->
-    <!--<el-option-->
-    <!--v-for="item in options"-->
-    <!--:key="item.value"-->
-    <!--:label="item.label"-->
-    <!--:value="item.value">-->
-    <!--</el-option>-->
-    <!--</el-select>-->
     <el-button style="float: right" type="primary" @click="dialogFormVisible = true; isCrete = true">新增角色</el-button>
     <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
       <el-form :model="form">

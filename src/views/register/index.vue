@@ -5,9 +5,9 @@
       <div class="title-container">
         <h3 class="title">注册</h3>
       </div>
-      <el-tabs stretch v-model="registerForm.type">
-        <el-tab-pane label="教师账号" name="0"></el-tab-pane>
-        <el-tab-pane label="管理员账号" name="1"></el-tab-pane>
+      <el-tabs stretch v-model="registerForm.role">
+        <el-tab-pane label="教师账号" name="teacher"></el-tab-pane>
+        <el-tab-pane label="管理员账号" name="admin"></el-tab-pane>
       </el-tabs>
       <el-form-item>
         <span class="svg-container">
@@ -16,7 +16,7 @@
         <el-input
           ref="username"
           v-model="registerForm.username"
-          placeholder="请输入Email"
+          placeholder="请输入手机号"
           name="username"
           type="text"
           tabindex="1"
@@ -59,6 +59,34 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
+      <el-form-item>
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input
+          ref="username"
+          v-model="registerForm.name"
+          placeholder="请输入姓名"
+          name="username"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item>
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input
+          ref="username"
+          v-model="registerForm.sno"
+          placeholder="请输入工号"
+          name="username"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:20px;" @click.native.prevent="handleSend">确认</el-button>
       <el-button :loading="loading" type="text" style="width:100%;margin-bottom:5px;margin-left: 0px" @click.native.prevent="handleCancel">取消</el-button>
       <el-button :loading="loading" type="text" style="float:right;font-weight:bold;" @click.native.prevent="handlelogin">返回登录</el-button>
@@ -80,8 +108,10 @@ export default {
     }
     return {
       registerForm: {
-        type: '0',
+        role: 'teacher',
         username: '',
+        name: '',
+        sno: '',
         password: '',
         confPassword: ''
       },
@@ -109,11 +139,21 @@ export default {
       })
     },
     handleSend() {
-      console.log('hhh')
+      this.loading = true
+      const registerData = this.registerForm
+      delete registerData.confPassword
+      this.$store.dispatch('user/register', registerData).then((data) => {
+        console.log(data)
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
     },
     handleCancel() {
-      this.registerForm.type = '0'
+      this.registerForm.role = 'teacher'
       this.registerForm.username = ''
+      this.registerForm.name = ''
+      this.registerForm.sno = ''
       this.registerForm.password = ''
       this.registerForm.confPassword = ''
     },

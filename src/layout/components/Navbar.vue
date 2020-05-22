@@ -34,6 +34,8 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { removeToken } from '@/utils/auth'
+import { resetRouter } from '@/router'
 
 export default {
   components: {
@@ -51,7 +53,10 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
+      // await this.$store.dispatch('user/logout')
+      removeToken() // must remove  token  first
+      resetRouter()
+      // commit('RESET_STATE')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }

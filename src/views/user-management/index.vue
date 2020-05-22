@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button style="float: right" type="primary" @click="handleCreate">添加用户</el-button>
+    <el-button style="float: right" type="primary" @click="handleCreate()">添加用户</el-button>
     <el-table
       :data="tableData"
       style="width: 100%">
@@ -39,7 +39,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <side-list :display="sideListDisplay" :data="userData" :isCreate="isCreate" @sideListDisplay="handleSideList($event)"></side-list>
+    <side-list :display="sideListDisplay" :data="userData" :isCreate="isCreate" @sideListDisplay="handleSideList($event)" @userData="handleCreate($event)"></side-list>
   </div>
 </template>
 
@@ -73,10 +73,14 @@ export default {
     handleSideList(bol) {
       this.sideListDisplay = bol
     },
-    handleCreate() {
-      this.isCreate = true
-      this.sideListDisplay = true
-      this.userData = {}
+    handleCreate(bol) {
+      if (bol) {
+        this.tableData.push(bol)
+      } else {
+        this.isCreate = true
+        this.sideListDisplay = true
+        this.userData = {}
+      }
     },
     handleEdit(index, row) {
       this.isCreate = false

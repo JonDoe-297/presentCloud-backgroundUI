@@ -1,6 +1,7 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, register } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import qs from 'qs'
 
 const getDefaultState = () => {
   return {
@@ -31,13 +32,18 @@ const actions = {
   // user login
   login({ commit }, userInfo) {
     const { username, password } = userInfo
+    // const userMsg = qs.stringify({
+    //   username: username,
+    //   password: password
+    // })
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         console.log('this login')
         console.log(response)
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        // const { data } = response
+        const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjdXJyZW50VGltZU1pbGxpcyI6IjE1OTAxMzAzMDUxNDEiLCJleHAiOjE1OTAxMzM5MDUsImFjY291bnQiOiIxMzIwMDAwMDAwMCJ9.0Abm_r9DF9LLY42hO0E0LX2iwZbKsZrtWF3dVR7Iy84'
+        commit('SET_TOKEN', token)
+        setToken(token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -73,6 +79,20 @@ const actions = {
         removeToken() // must remove  token  first
         resetRouter()
         commit('RESET_STATE')
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // user register
+  register({ commit }, userInfo) {
+    return new Promise((resolve, reject) => {
+      register(userInfo).then(response => {
+        console.log('this register')
+        console.log(response)
+        // const { data } = response
         resolve()
       }).catch(error => {
         reject(error)

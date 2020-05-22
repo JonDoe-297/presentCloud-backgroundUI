@@ -117,6 +117,12 @@ export const constantRoutes = [
         meta: { title: '菜单管理', icon: 'list' }
       },
       {
+        path: 'organize',
+        name: 'Organize',
+        component: () => import('@/views/organize/index'),
+        meta: { title: '组织管理', icon: 'list' }
+      },
+      {
         path: 'roleUser',
         name: 'RoleUser',
         component: () => import('@/views/role-management/index'),

@@ -189,6 +189,9 @@ export default {
         message: '创建成功',
         type: 'success'
       })
+      this.sideDiaplay = false
+      this.$emit('sideListDisplay', false)
+      this.$emit('userData', this.form)
     },
     handleEdit(index, row) {
       this.$message({
