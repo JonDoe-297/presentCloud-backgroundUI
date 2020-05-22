@@ -144,6 +144,16 @@ export default {
       delete registerData.confPassword
       this.$store.dispatch('user/register', registerData).then((data) => {
         console.log(data)
+        if (data.msg === '注册成功') {
+          this.$message({
+            message: data.msg + '，请重新登入',
+            type: 'success'
+          })
+          this.$router.push({ path: this.redirect || '/login' })
+          this.loading = false
+        } else {
+          this.$message.error(data.msg + '，请更换手机号' || 'Has Error')
+        }
         this.loading = false
       }).catch(() => {
         this.loading = false
