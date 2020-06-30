@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
-
+import { getClassList } from '@/api/class'
+import { mapGetters } from 'vuex'
 export default {
   filters: {
     statusFilter(status) {
@@ -77,16 +77,25 @@ export default {
       listLoading: true
     }
   },
+  computed: {
+    ...mapGetters([
+      'userId'
+    ])
+  },
   created() {
     this.fetchData()
   },
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
+      const data = {
+        userId: this.userId
+      }
+      getClassList(data).then(response => {
+        this.list = response.data
         this.listLoading = false
       })
+      // this.listLoading = false
     },
     handleEdit(index, row) {
       console.log(index, row)

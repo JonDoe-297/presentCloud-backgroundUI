@@ -36,6 +36,7 @@ import Create from './components/Create'
 import Join from './components/Join'
 // import Timeline from './components/Timeline'
 // import Account from './components/Account'
+import { getInfo } from '@/api/user'
 
 export default {
   name: 'Profile',
@@ -58,12 +59,17 @@ export default {
   },
   methods: {
     getUser() {
-      this.user = {
-        name: this.name,
-        role: this.roles.join(' | '),
-        email: 'admin@test.com',
-        avatar: this.avatar
-      }
+      getInfo().then(response => {
+        const userData = response.data
+        this.user = {
+          name: userData.username,
+          school: userData.userschool,
+          department: userData.userDepartment,
+          role: this.roles.join(' | '),
+          email: 'admin@test.com',
+          avatar: this.avatar
+        }
+      })
     }
   }
 }

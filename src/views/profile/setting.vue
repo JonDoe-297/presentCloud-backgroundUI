@@ -10,7 +10,7 @@
           <el-form-item label="昵称">
             <el-input v-model="form.nickname" />
           </el-form-item>
-          <el-form-item label="学号">
+          <el-form-item label="工号">
             <el-input v-model="form.id" />
           </el-form-item>
           <el-form-item label="所在院校">
@@ -31,9 +31,9 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="所在班级">
-            <el-input v-model="form.class" />
-          </el-form-item>
+          <!--<el-form-item label="所在班级">-->
+            <!--<el-input v-model="form.class" />-->
+          <!--</el-form-item>-->
           <el-form-item label="个人介绍">
             <el-input v-model="form.introduction" type="textarea" />
           </el-form-item>
@@ -63,6 +63,9 @@
 </template>
 
 <script>
+// import { addDepartment } from '@/api/class'
+// import { addSchool } from '@/api/class'
+import { getInfo } from '@/api/user'
 export default {
   data() {
     return {
@@ -72,26 +75,25 @@ export default {
         id: '',
         introduction: '',
         schoolValue: '',
-        facultyValue: '',
-        class: ''
+        facultyValue: ''
       },
       schoolOptions: [{
-        value: '选项1',
+        value: '福州大学',
         label: '福州大学'
       }, {
-        value: '选项2',
+        value: '厦门大学',
         label: '厦门大学'
       }, {
-        value: '选项3',
+        value: '厦门理工学院',
         label: '厦门理工学院'
       }, {
-        value: '选项4',
+        value: '华侨大学',
         label: '华侨大学'
       }, {
-        value: '选项5',
+        value: '福建师范大学',
         label: '福建师范大学'
       }, {
-        value: '选项6',
+        value: '福建农林大学',
         label: '福建农林大学'
       }],
       schoolValue: '',
@@ -108,6 +110,9 @@ export default {
         label: '经济与管理学院'
       }]
     }
+  },
+  created() {
+    this.getUser()
   },
   methods: {
     handleAvatarSuccess(res, file) {
@@ -128,8 +133,21 @@ export default {
     handleChange(file, fileList) {
       this.fileList = fileList.slice(-3)
     },
+    getUser() {
+      getInfo().then(response => {
+        const userData = response.data
+        this.form = {
+          name: userData.username,
+          nickname: '',
+          id: '',
+          introduction: '',
+          schoolValue: '',
+          facultyValue: ''
+        }
+      })
+    },
     onSubmit() {
-      this.$message('submit!')
+      this.$message('更新成功!')
       this.$router.push('/class')
     },
     onCancel() {

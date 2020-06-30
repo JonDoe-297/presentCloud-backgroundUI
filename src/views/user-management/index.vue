@@ -59,6 +59,12 @@ export default {
         sex: '男',
         birthday: '',
         phone: '18911111111'
+      }, {
+        account: 'test',
+        name: 'test',
+        sex: '男',
+        birthday: '',
+        phone: '18911111111'
       }],
       // defaultValue: '1',
       formLabelWidth: '120px',

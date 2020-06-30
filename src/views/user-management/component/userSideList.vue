@@ -1,6 +1,7 @@
 <template>
   <div>
     <!--<el-button icon="el-icon-setting" @click="handleSetting(diaplay)" type="text" size="small">字典配置</el-button>-->
+    <div class="mask" v-if="sideDiaplay" @click="handleClose()"></div>
     <el-card class="box-card" v-if="sideDiaplay">
       <div slot="header" class="clearfix">
         <span>新增</span>
@@ -211,6 +212,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    margin: 0;
+    opacity: 0.5;
+    background-color: black;
+    z-index: 1001;
+  }
   .text {
     font-size: 14px;
   }
@@ -231,7 +244,7 @@ export default {
   .box-card {
     position: fixed;
     top: 5px;
-    z-index: 999;
+    z-index: 1002;
     right: 10px;
     width: 600px;
     height: 98%;

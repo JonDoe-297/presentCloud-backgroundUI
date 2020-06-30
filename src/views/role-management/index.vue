@@ -31,6 +31,10 @@
         label="角色名称">
       </el-table-column>
       <el-table-column
+        prop="time"
+        label="创建时间">
+      </el-table-column>
+      <el-table-column
         fixed="right"
         label="操作">
         <template slot-scope="scope">
@@ -79,14 +83,17 @@ export default {
       tableData: [{
         code: 'test',
         name: '临时角色',
+        time: '2020/05/01',
         detail: '临时账号'
       }, {
         code: 'admin',
         name: '管理员',
+        time: '2020/05/01',
         detail: '管理员'
       }, {
         code: 'teacher',
         name: '教师',
+        time: '2020/05/01',
         detail: ''
       }],
       // defaultValue: '1',

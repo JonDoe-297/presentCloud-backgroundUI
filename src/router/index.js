@@ -75,13 +75,13 @@ export const constantRoutes = [
         path: 'index',
         name: 'Index',
         component: () => import('@/views/class/index'),
-        meta: { title: '班课查询', icon: 'table' }
+        meta: { title: '班课查询', icon: 'course' }
       },
       {
         path: 'create',
         name: 'Create',
         component: () => import('@/views/class/create'),
-        meta: { title: '创建班课', icon: 'tree' }
+        meta: { title: '创建班课', icon: 'createCourse' }
       }
     ]
   },
@@ -90,25 +90,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/systemManage/dataDict',
     name: 'SystemManage',
-    meta: { title: '系统管理', icon: 'edit' },
+    meta: { title: '系统管理', icon: 'system' },
     children: [
       {
         path: 'dataDict',
         name: 'DataDict',
         component: () => import('@/views/data-dictionary/index'),
-        meta: { title: '数据字典', icon: 'table' }
+        meta: { title: '数据字典', icon: 'dictionary' }
       },
       {
         path: 'parameter',
         name: 'Parameter',
         component: () => import('@/views/parameter-management/index'),
-        meta: { title: '参数管理', icon: 'table' }
-      },
-      {
-        path: 'user',
-        name: 'User',
-        component: () => import('@/views/user-management/index'),
-        meta: { title: '用户管理', icon: 'user' }
+        meta: { title: '参数管理', icon: 'parameter' }
       },
       {
         path: 'menuManage',
@@ -120,13 +114,19 @@ export const constantRoutes = [
         path: 'organize',
         name: 'Organize',
         component: () => import('@/views/organize/index'),
-        meta: { title: '组织管理', icon: 'list' }
+        meta: { title: '组织管理', icon: 'organization' }
+      },
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/user-management/index'),
+        meta: { title: '用户管理', icon: 'user2' }
       },
       {
         path: 'roleUser',
         name: 'RoleUser',
         component: () => import('@/views/role-management/index'),
-        meta: { title: '角色管理', icon: 'people' }
+        meta: { title: '角色管理', icon: 'role' }
       }
     ]
   },
@@ -141,7 +141,7 @@ export const constantRoutes = [
         path: 'resource',
         name: 'Resource',
         component: () => import('@/views/resource/index'),
-        meta: { title: '资源', icon: 'search' }
+        meta: { title: '资源', icon: 'resource' }
       },
       {
         path: 'info',

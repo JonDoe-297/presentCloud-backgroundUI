@@ -11,7 +11,8 @@
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
             :on-change="handleChange"
-            :file-list="fileList">
+            :file-list="fileList"
+          >
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
         </el-col>
@@ -19,7 +20,7 @@
     </el-card>
     <el-card style="margin:30px" shadow="always">
       <div class="resource-body">
-        <profile-card></profile-card>
+        <profile-card :fileNum="fileNum"/>
       </div>
     </el-card>
   </div>
@@ -27,6 +28,8 @@
 
 <script>
 import ProfileCard from './component/ProfileCard'
+import { getFilesByUserId, upload } from '@/api/resource'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Index',
@@ -37,11 +40,38 @@ export default {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
-      fileList: []
+      fileList: [],
+      fileNum: 0
     }
   },
+  created() {
+    this.handleGetResource()
+  },
+  computed: {
+    ...mapGetters([
+      'userId'
+    ])
+  },
   methods: {
+    handleGetResource() {
+      const data = {
+        userId: this.userId
+      }
+      getFilesByUserId(data).then(response => {
+        const fileData = response.data
+        this.fileNum = fileData.length
+        console.log(response)
+      })
+    },
     handleChange(file, fileList) {
+      // console.log(file)
+      const fileData = {
+        file: file,
+        userId: this.userId
+      }
+      upload(fileData).then(response => {
+        console.log(response)
+      })
       this.fileList = fileList.slice(-3)
     }
   }

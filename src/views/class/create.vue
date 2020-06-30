@@ -2,17 +2,18 @@
   <div class="app-container">
     <div class="class-create">
       <el-form ref="form" :model="form" label-width="120px">
-        <el-form-item label="课程封面">
-          <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
+        <!--<el-form-item label="课程封面">-->
+        <!--<el-upload-->
+        <!--class="avatar-uploader"-->
+        <!--action="https://jsonplaceholder.typicode.com/posts/"-->
+        <!--:show-file-list="false"-->
+        <!--:on-success="handleAvatarSuccess"-->
+        <!--:before-upload="beforeAvatarUpload"-->
+        <!--&gt;-->
+        <!--<img v-if="imageUrl" :src="imageUrl" class="avatar">-->
+        <!--<i v-else class="el-icon-plus avatar-uploader-icon" />-->
+        <!--</el-upload>-->
+        <!--</el-form-item>-->
         <el-form-item label="课程名称">
           <el-input v-model="form.name" />
         </el-form-item>
@@ -35,7 +36,8 @@
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
             :on-change="handleChange"
-            :file-list="fileList">
+            :file-list="fileList"
+          >
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
@@ -59,6 +61,8 @@
 </template>
 
 <script>
+import { addClass } from '@/api/class'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -75,6 +79,11 @@ export default {
       imageUrl: '',
       fileList: []
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userId'
+    ])
   },
   methods: {
     handleAvatarSuccess(res, file) {
@@ -96,8 +105,13 @@ export default {
       this.fileList = fileList.slice(-3)
     },
     onSubmit() {
-      this.$message('submit!')
-      this.$router.push('/class')
+      const data = this.form
+      data.userId = this.userId
+      data.className = this.form.name
+      addClass(data).then(response => {
+        this.$message('submit!')
+      })
+      // this.$router.push('/class')
     },
     onCancel() {
       this.$message({
