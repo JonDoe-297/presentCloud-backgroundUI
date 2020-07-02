@@ -51,7 +51,7 @@ service.interceptors.response.use(
       res['token'] = response.headers.authorization
     }
     // if the custom code is not 200, it is judged as an error.
-    if (res.code !== 200 && res.code !== '200') {
+    if (res.code !== 200 && res.code !== '200' && res.code !== '2001') {
       Message({
         message: res.message || res.msg || 'Error',
         type: 'error',

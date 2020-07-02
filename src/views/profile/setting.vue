@@ -39,7 +39,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">更新信息</el-button>
-            <el-button @click="onCancel">取消</el-button>
+            <el-button @click="getUser">重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -141,20 +141,13 @@ export default {
           nickname: '',
           id: '',
           introduction: '',
-          schoolValue: '',
-          facultyValue: ''
+          schoolValue: userData.userschool,
+          facultyValue: userData.userDepartment
         }
       })
     },
     onSubmit() {
       this.$message('更新成功!')
-      this.$router.push('/class')
-    },
-    onCancel() {
-      this.$message({
-        message: 'cancel!',
-        type: 'warning'
-      })
       this.$router.push('/class')
     }
   }

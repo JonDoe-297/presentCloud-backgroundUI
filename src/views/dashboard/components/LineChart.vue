@@ -90,10 +90,10 @@ export default {
           }
         },
         legend: {
-          data: ['class1', 'class2']
+          data: ['课程1', '课程2']
         },
         series: [{
-          name: 'class1', itemStyle: {
+          name: '课程1', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -109,7 +109,7 @@ export default {
           animationEasing: 'cubicInOut'
         },
         {
-          name: 'class2',
+          name: '课程2',
           smooth: true,
           type: 'line',
           itemStyle: {

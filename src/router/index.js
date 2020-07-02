@@ -78,6 +78,13 @@ export const constantRoutes = [
         meta: { title: '班课查询', icon: 'course' }
       },
       {
+        path: 'detail',
+        name: 'Detail',
+        component: () => import('@/views/class/detail'),
+        meta: { title: '班课', icon: 'createCourse' },
+        hidden: true
+      },
+      {
         path: 'create',
         name: 'Create',
         component: () => import('@/views/class/create'),

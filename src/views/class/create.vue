@@ -85,6 +85,11 @@ export default {
       'userId'
     ])
   },
+  created() {
+    if (this.$route.query.detail) {
+      this.form.name = JSON.parse(this.$route.query.detail).classname
+    }
+  },
   methods: {
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
@@ -105,7 +110,10 @@ export default {
       this.fileList = fileList.slice(-3)
     },
     onSubmit() {
-      const data = this.form
+      const data = {
+        className: '',
+        userId: 0
+      }
       data.userId = this.userId
       data.className = this.form.name
       addClass(data).then(response => {
@@ -114,10 +122,10 @@ export default {
       // this.$router.push('/class')
     },
     onCancel() {
-      this.$message({
-        message: 'cancel!',
-        type: 'warning'
-      })
+      // this.$message({
+      //   message: 'cancel!',
+      //   type: 'warning'
+      // })
       this.$router.push('/class')
     }
   }

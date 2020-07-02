@@ -44,7 +44,8 @@ export default {
   data() {
     return {
       user: {},
-      activeTab: 'join'
+      activeTab: 'join',
+      flag: false
     }
   },
   computed: {
@@ -65,10 +66,12 @@ export default {
           name: userData.username,
           school: userData.userschool,
           department: userData.userDepartment,
-          role: this.roles.join(' | '),
+          // role: this.roles.join(' | '),
+          role: '',
           email: 'admin@test.com',
           avatar: this.avatar
         }
+        // this.flag = true
       })
     }
   }
