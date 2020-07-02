@@ -20,21 +20,21 @@
     </el-card>
     <el-card style="margin:30px" shadow="always">
       <div class="resource-body">
-        <profile-card :fileNum="fileNum"/>
+        <resource-card :fileNum="fileNum"/>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
-import ProfileCard from './component/ProfileCard'
+import ResourceCard from './component/ResourceCard'
 import { getFilesByUserId, upload } from '@/api/resource'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Index',
   components: {
-    ProfileCard
+    ResourceCard
   },
   data() {
     return {

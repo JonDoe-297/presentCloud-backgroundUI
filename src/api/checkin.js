@@ -15,3 +15,11 @@ export function addCheckinInfo(params) {
     params
   })
 }
+
+export function getCheckinResult(params) {
+  return request({
+    url: '/checkin/getCheckinResult',
+    method: 'get',
+    params
+  })
+}

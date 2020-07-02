@@ -119,7 +119,7 @@ export default {
       addClass(data).then(response => {
         this.$message('submit!')
       })
-      // this.$router.push('/class')
+      this.$router.push('/class')
     },
     onCancel() {
       // this.$message({

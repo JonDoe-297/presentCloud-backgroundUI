@@ -1,83 +1,142 @@
 <template>
-  <el-row>
-    <el-col :span="fileNum" v-for="(o, index) in fileNum" :key="o" :offset="index % 3 != 0 ? 2 : 0" style="padding-bottom: 25px">
-      <el-card :body-style="{ padding: '0px' }">
-        <!--<img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">-->
-        <el-row>
-          <el-col :span="6"><i class="el-icon-files" style="font-size: 30px;padding: 20px"></i></el-col>
-          <el-col :span="18">
-            <div class="card-title">VUE</div>
-            <div style="padding: 10px 5px 10px 0">文件简介文件简介文件简介文件简介文件简介</div>
-          </el-col>
-        </el-row>
-        <el-row>
-          <div style="padding: 5px 45px 14px 45px;background-color: #F2F6FC">
-            <div class="bottom clearfix">
-              <el-button type="text" class="button-left">删除</el-button>
-              <el-button type="text" class="button-right">下载</el-button>
-            </div>
+  <el-card style="margin-bottom:20px;">
+    <div slot="header" class="clearfix">
+      <span>About me</span>
+    </div>
+
+    <div class="user-profile">
+      <div class="box-center">
+        <pan-thumb :image="'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'" :height="'100px'" :width="'100px'" :hoverable="false">
+          <div>Hello</div>
+          <!--<img class="img-circle" :src="'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'">-->
+          <!--{{ user.role }}-->
+        </pan-thumb>
+      </div>
+      <div class="box-center">
+        <!--<div class="user-name text-center">{{ user.name }}</div>-->
+        <!--<div class="user-role text-center text-muted">{{ user.role | uppercaseFirst }}</div>-->
+        <div class="user-name text-center">{{ user.name }}</div>
+        <div class="user-role text-center text-muted">{{ user.role }}</div>
+      </div>
+    </div>
+
+    <div class="user-bio">
+      <div class="user-education user-bio-section">
+        <div class="user-bio-section-header"><svg-icon icon-class="user" /><span>学院</span></div>
+        <div class="user-bio-section-body">
+          <div class="text-muted">
+            {{ user.role }}
           </div>
-        </el-row>
-      </el-card>
-    </el-col>
-  </el-row>
+        </div>
+      </div>
+    </div>
+    <!--<div class="user-bio">-->
+    <!--<div class="user-education user-bio-section">-->
+    <!--<div class="user-bio-section-header"><svg-icon icon-class="tree" /><span>班级</span></div>-->
+    <!--<div class="user-bio-section-body">-->
+    <!--<div class="text-muted">-->
+    <!--{{ user.department }}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="user-bio">
+      <div class="user-education user-bio-section">
+        <div class="user-bio-section-header"><i class="el-icon-location-outline"></i><span>学校</span></div>
+        <div class="user-bio-section-body">
+          <div class="text-muted">
+            {{ user.school }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </el-card>
 </template>
 
 <script>
+import PanThumb from '@/components/PanThumb'
+
 export default {
-  name: 'ProfileCard',
+  components: { PanThumb },
   props: {
-    fileNum: {
-      default: 6,
-      type: Number,
-      deep: true
+    user: {
+      type: Object,
+      default: () => {
+        return {
+          name: 'hhh',
+          school: '',
+          department: '',
+          email: '',
+          avatar: '',
+          roles: ''
+        }
+      }
     }
   },
-  data() {
-    return {
-      currentDate: new Date()
+  watch: {
+    user(val, oldVal) {
+      this.user = val
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .time {
-    font-size: 13px;
-    color: #999;
-  }
-  .card-title {
-    font-weight:bold;
-    padding-top: 20px;
-    font-size:16px;
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-  }
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .button-left{
-    padding: 0;
-    float: left;
-  }
-  .button-right {
-    padding: 0;
-    float: right;
-  }
-
-  .image {
-    width: 20%;
-    display: block;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
+  .box-center {
+    margin: 0 auto;
     display: table;
-    content: "";
   }
 
-  .clearfix:after {
-    clear: both
+  .text-muted {
+    color: #777;
+  }
+
+  .user-profile {
+    .user-name {
+      font-weight: bold;
+    }
+
+    .box-center {
+      padding-top: 10px;
+    }
+
+    .user-role {
+      padding-top: 10px;
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .box-social {
+      padding-top: 30px;
+
+      .el-table {
+        border-top: 1px solid #dfe6ec;
+      }
+    }
+
+    .user-follow {
+      padding-top: 20px;
+    }
+  }
+
+  .user-bio {
+    margin-top: 20px;
+    color: #606266;
+
+    span {
+      padding-left: 4px;
+    }
+
+    .user-bio-section {
+      font-size: 14px;
+      padding: 15px 0;
+
+      .user-bio-section-header {
+        border-bottom: 1px solid #dfe6ec;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+    }
   }
 </style>

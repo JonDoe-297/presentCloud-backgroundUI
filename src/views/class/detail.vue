@@ -17,13 +17,14 @@
           <el-row style="margin-bottom: 15px;float: right">
             <el-col :span="24">
               <el-button v-if="activeTab === 'student'" type="primary" round disabled>添加学生</el-button>
-              <el-button v-else-if="activeTab === 'checkin'" type="primary" round @click="dialogVisible = true" disabled>创建签到</el-button>
+              <el-button v-else-if="activeTab === 'checkin'" type="primary" round :loading="checkinLoading" @click="handleCheckinDefaultTime">创建签到</el-button>
               <router-link to="/class/index">
                 <el-button type="success" round>返回班课列表</el-button>
               </router-link>
             </el-col>
           </el-row>
           <el-table
+            v-if="activeTab === 'student'"
             v-loading="listLoading"
             :data="list"
             element-loading-text="Loading"
@@ -64,6 +65,31 @@
               </template>
             </el-table-column>
           </el-table>
+          <el-table
+            v-else-if="activeTab === 'checkin'"
+            v-loading="listLoading"
+            :data="list"
+            element-loading-text="Loading"
+            fit
+            highlight-current-row
+          >
+            <el-table-column align="center" label="学生学号">
+              <template slot-scope="scope">
+                {{ scope.row.classNum }}
+              </template>
+            </el-table-column>
+            <el-table-column align="center" label="学生姓名">
+              <template slot-scope="scope">
+                {{ scope.row.name }}
+              </template>
+            </el-table-column>
+            <el-table-column align="center" label="是否签到">
+              <template slot-scope="scope">
+                <i v-if="scope.row.chenkinIs === 1" class="el-icon-check"></i>
+                <i v-else class="el-icon-close"></i>
+              </template>
+            </el-table-column>
+          </el-table>
         <!--</el-card>-->
         </el-tabs>
       </el-col>
@@ -92,20 +118,25 @@
 
 <script>
 import { getClassByClassnum, removeStudent } from '@/api/class'
-import { getCheckinInfoList, addCheckinInfo } from '@/api/checkin'
+import { getCheckinInfoList, addCheckinInfo, getCheckinResult } from '@/api/checkin'
 import ClassCard from './components/ClassCard'
 export default {
   name: 'Detail',
   components: { ClassCard },
   data() {
     return {
-      list: null,
+      list: [],
       listLoading: true,
       searchInput: '',
       classNum: 0,
       activeTab: 'student',
-      timeValue: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
-      dialogVisible: false
+      timeValue: [new Date(2020, 7, 2, 8, 40), new Date(2020, 7, 3, 9, 40)],
+      dialogVisible: false,
+      checkininfoid: null,
+      checkinLoading: false,
+      timeOut: 0,
+      timer: null,
+      timerOut: null
     }
   },
   computed: {
@@ -113,7 +144,7 @@ export default {
     timeDefault() {
       const date = new Date()
       // 通过时间戳计算
-      let defalutStartTime = date.getTime() - 7 * 24 * 3600 * 1000 // 转化为时间戳
+      let defalutStartTime = date.getTime() // - 7 * 24 * 3600 * 1000  转化为时间戳
       let defalutEndTime = date.getTime()
       const startDateNs = new Date(defalutStartTime)
       // 月，日 不够10补0
@@ -137,13 +168,27 @@ export default {
   mounted() {
     // 时间默认值
     this.timeValue = this.timeDefault
+    // this.timer = setInterval(console.log('hhh'), 1000)
+    // this.timer = setTimeout(setInterval(console.log('hhh'), 1000), this.timeOut)
   },
   created() {
     this.classNum = this.$route.query.classNum
     this.fetchStudentData(this.classNum)
-    this.fetchCurrentTime()
+    clearInterval(this.timer)
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
+    clearTimeout(this.timerOut)
   },
   methods: {
+    setTimer() {
+      if (this.timer == null) {
+        this.checkinLoading = true
+        this.timer = setInterval(() => {
+          this.fetchCheckinData(this.classNum)
+        }, 5000)
+      }
+    },
     fetchStudentData(num) {
       this.listLoading = true
       const data = {
@@ -156,21 +201,31 @@ export default {
       })
     },
     fetchCheckinData(num) {
+      this.list = []
       this.listLoading = true
       const data = {
         classNum: num
       }
       getCheckinInfoList(data).then(response => {
-        this.list = []
         // this.list = response.data.studentList
-        console.log(response)
+        // console.log('getCheckinInfoList', response)
+        this.checkininfoid = response.data[response.data.length - 1].checkininfoid
         // const studentList = this.list.studentList
         this.listLoading = false
       })
-    },
-    fetchCurrentTime() {
-      console.log(1)
-      // this.timeValue =
+      console.log(this.checkininfoid)
+      if (this.checkininfoid) {
+        const data = {
+          classNum: num,
+          checkinInfoId: this.checkininfoid
+        }
+        getCheckinResult(data).then(response => {
+          this.list = response.data
+          console.log('getCheckinResult', response)
+          // const studentList = this.list.studentList
+          this.listLoading = false
+        })
+      }
     },
     handleDelete(bol, row) {
       if (bol) {
@@ -187,6 +242,11 @@ export default {
         })
       }
     },
+    handleCheckinDefaultTime() {
+      this.checkininfoid = null
+      this.timeValue = this.timeDefault
+      this.dialogVisible = true
+    },
     handleCheckin() {
       const time = {
         classNum: this.classNum,
@@ -195,8 +255,25 @@ export default {
         code: ''
       }
       addCheckinInfo(time).then(response => {
-        console.log(response)
-        // const studentList = this.list.studentList
+        if (response.code === '200') {
+          this.$message({
+            message: response.msg,
+            type: 'success'
+          })
+        } else {
+          this.$message(response.msg)
+        }
+        // this.timeOut = this.timeValue[1] - this.timeValue[0]
+        this.setTimer()
+        this.timerOut = setTimeout(() => {
+          clearInterval(this.timer)
+          this.checkinLoading = false
+          this.$notify({
+            title: '时间到',
+            message: '签到时间到！',
+            type: 'warning'
+          })
+        }, this.timeValue[1] - this.timeValue[0])
         this.dialogVisible = false
       })
     },
