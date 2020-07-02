@@ -17,7 +17,7 @@
           <el-row style="margin-bottom: 15px;float: right">
             <el-col :span="24">
               <el-button v-if="activeTab === 'student'" type="primary" round disabled>添加学生</el-button>
-              <el-button v-else-if="activeTab === 'checkin'" type="primary" round @click="dialogVisible = true">创建签到</el-button>
+              <el-button v-else-if="activeTab === 'checkin'" type="primary" round @click="dialogVisible = true" disabled>创建签到</el-button>
               <router-link to="/class/index">
                 <el-button type="success" round>返回班课列表</el-button>
               </router-link>
