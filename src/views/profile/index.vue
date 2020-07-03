@@ -61,14 +61,13 @@ export default {
   methods: {
     getUser() {
       getInfo().then(response => {
-        console.log(response)
         const userData = response.data
         this.user = {
           name: userData.username,
           school: userData.userschool,
           department: userData.userDepartment,
           // role: this.roles.join(' | '),
-          role: this.roles,
+          role: userData.roleList[0].role_description,
           email: 'admin@test.com',
           avatar: this.avatar
         }

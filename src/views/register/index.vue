@@ -174,7 +174,6 @@ export default {
       const registerData = JSON.parse(JSON.stringify(this.registerForm))
       delete registerData.confPassword
       this.$store.dispatch('user/register', registerData).then((data) => {
-        console.log(data)
         if (data.msg === '注册成功') {
           this.$message({
             message: data.msg + '，请重新登入',
