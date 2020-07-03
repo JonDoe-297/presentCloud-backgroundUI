@@ -9,7 +9,7 @@
         <pan-thumb :image="'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'" :height="'100px'" :width="'100px'" :hoverable="false">
           <div>Hello</div>
           <!--<img class="img-circle" :src="'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'">-->
-          <!--{{ user.role }}-->
+          {{ user.role }}
         </pan-thumb>
       </div>
       <div class="box-center">
@@ -25,21 +25,11 @@
         <div class="user-bio-section-header"><svg-icon icon-class="user" /><span>学院</span></div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            {{ user.role }}
+            {{ user.department }}
           </div>
         </div>
       </div>
     </div>
-    <!--<div class="user-bio">-->
-      <!--<div class="user-education user-bio-section">-->
-        <!--<div class="user-bio-section-header"><svg-icon icon-class="tree" /><span>班级</span></div>-->
-        <!--<div class="user-bio-section-body">-->
-          <!--<div class="text-muted">-->
-            <!--{{ user.department }}-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
     <div class="user-bio">
       <div class="user-education user-bio-section">
         <div class="user-bio-section-header"><i class="el-icon-location-outline"></i><span>学校</span></div>

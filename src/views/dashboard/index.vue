@@ -23,6 +23,11 @@ export default {
     ...mapGetters([
       'name'
     ])
+  },
+  data() {
+    return {
+      lineChartData: {}
+    }
   }
 }
 </script>
