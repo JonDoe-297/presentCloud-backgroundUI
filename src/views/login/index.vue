@@ -13,7 +13,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="请输入注册手机号"
           name="username"
           type="text"
           tabindex="1"
@@ -30,7 +30,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -64,21 +64,21 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { validUsername, validPassword } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的账号！'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 0) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (validPassword(value)) {
+        callback(new Error('密码不得少于6位!'))
       } else {
         callback()
       }
@@ -86,7 +86,7 @@ export default {
     return {
       autoLogin: false,
       loginForm: {
-        username: '13200000000',
+        username: '13200000001',
         password: '123456'
       },
       loginRules: {

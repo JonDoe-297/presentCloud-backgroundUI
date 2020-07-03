@@ -25,6 +25,9 @@ const mutations = {
   SET_ID: (state, id) => {
     state.id = id
   },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
+  },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   }
@@ -63,11 +66,16 @@ const actions = {
 
         // const { name } = data.username
         // const { id } = data.userid
-        const avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
-        commit('SET_NAME', data.username)
-        commit('SET_ID', data.userid)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
+        if (data.roleList[0].role_name === 'student') {
+          reject('学生账号禁止登入')
+        } else {
+          const avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+          commit('SET_NAME', data.username)
+          commit('SET_ID', data.userid)
+          commit('SET_ROLES', data.roleList[0].role_name)
+          commit('SET_AVATAR', avatar)
+          resolve(data)
+        }
       }).catch(error => {
         reject(error)
       })

@@ -1,7 +1,6 @@
 <template>
   <div class="register-container">
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form" auto-complete="on" label-position="left">
-
       <div class="title-container">
         <h3 class="title">注册</h3>
       </div>
@@ -9,7 +8,7 @@
         <el-tab-pane label="教师账号" name="teacher"></el-tab-pane>
         <el-tab-pane label="管理员账号" name="admin"></el-tab-pane>
       </el-tabs>
-      <el-form-item>
+      <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
@@ -23,7 +22,7 @@
           auto-complete="on"
         />
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
@@ -41,7 +40,7 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="confPassword">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
@@ -59,7 +58,7 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="name">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
@@ -73,7 +72,7 @@
           auto-complete="on"
         />
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="sno">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
@@ -88,20 +87,48 @@
         />
       </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:20px;" @click.native.prevent="handleSend">确认</el-button>
-      <el-button :loading="loading" type="text" style="width:100%;margin-bottom:5px;margin-left: 0px" @click.native.prevent="handleCancel">取消</el-button>
+      <el-button :loading="loading" type="text" style="width:100%;margin-bottom:5px;margin-left: 0px" @click.native.prevent="handleCancel">重置</el-button>
       <el-button :loading="loading" type="text" style="float:right;font-weight:bold;" @click.native.prevent="handlelogin">返回登录</el-button>
 
     </el-form>
   </div>
 </template>
 <script>
-import { validUsername } from '@/utils/validate'
+import { validUsername, validPassword, validSno } from '@/utils/validate'
 export default {
   name: 'Index',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的手机号！'))
+      } else {
+        callback()
+      }
+    }
+    const validatePassword = (rule, value, callback) => {
+      if (validPassword(value)) {
+        callback(new Error('密码不得少于6位!'))
+      } else {
+        callback()
+      }
+    }
+    const validateConfPassword = (rule, value, callback) => {
+      if (value !== this.registerForm.password) {
+        callback(new Error('输入密码不一致'))
+      } else {
+        callback()
+      }
+    }
+    const validateName = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入姓名！'))
+      } else {
+        callback()
+      }
+    }
+    const validateSno = (rule, value, callback) => {
+      if (!validSno(value)) {
+        callback(new Error('请输入正确的工号！'))
       } else {
         callback()
       }
@@ -116,7 +143,11 @@ export default {
         confPassword: ''
       },
       registerRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }]
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        confPassword: [{ required: true, trigger: 'blur', validator: validateConfPassword }],
+        name: [{ required: true, trigger: 'blur', validator: validateName }],
+        sno: [{ required: true, trigger: 'blur', validator: validateSno }]
       },
       active: 0,
       loading: false,
@@ -140,7 +171,7 @@ export default {
     },
     handleSend() {
       this.loading = true
-      const registerData = this.registerForm
+      const registerData = JSON.parse(JSON.stringify(this.registerForm))
       delete registerData.confPassword
       this.$store.dispatch('user/register', registerData).then((data) => {
         console.log(data)
