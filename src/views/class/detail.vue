@@ -73,11 +73,6 @@
             fit
             highlight-current-row
           >
-            <el-table-column align="center" label="学生学号">
-              <template slot-scope="scope">
-                {{ scope.row.classNum }}
-              </template>
-            </el-table-column>
             <el-table-column align="center" label="学生姓名">
               <template slot-scope="scope">
                 {{ scope.row.name }}
@@ -137,23 +132,6 @@ export default {
       timeOut: 0,
       timer: null,
       timerOut: null
-    }
-  },
-  computed: {
-    // 默认时间
-    timeDefault() {
-      const date = new Date()
-      // 通过时间戳计算
-      let defalutStartTime = date.getTime() // - 7 * 24 * 3600 * 1000  转化为时间戳
-      let defalutEndTime = date.getTime()
-      const startDateNs = new Date(defalutStartTime)
-      // 月，日 不够10补0
-      defalutStartTime = startDateNs.getFullYear() + '-' + ((startDateNs.getMonth() + 1) >= 10 ? (startDateNs.getMonth() + 1) : '0' + (startDateNs.getMonth() + 1)) +
-        '-' + (startDateNs.getDate() >= 10 ? startDateNs.getDate() : '0' + startDateNs.getDate()) + ' ' + ((startDateNs.getHours()) >= 10 ? (startDateNs.getHours()) : '0' + (startDateNs.getHours())) +
-        ':' + (startDateNs.getMinutes() >= 10 ? startDateNs.getMinutes() : '0' + startDateNs.getMinutes()) + ':' + (startDateNs.getSeconds() >= 10 ? startDateNs.getSeconds() : '0' + startDateNs.getSeconds())
-      defalutEndTime = defalutStartTime
-      console.log([defalutStartTime, defalutEndTime])
-      return [defalutStartTime, defalutEndTime]
     }
   },
   watch: {
@@ -242,9 +220,24 @@ export default {
         })
       }
     },
+    timeDefault() {
+      // 默认时间
+      const date = new Date()
+      // 通过时间戳计算
+      let defalutStartTime = date.getTime() // - 7 * 24 * 3600 * 1000  转化为时间戳
+      let defalutEndTime = date.getTime()
+      const startDateNs = new Date(defalutStartTime)
+      // 月，日 不够10补0
+      defalutStartTime = startDateNs.getFullYear() + '-' + ((startDateNs.getMonth() + 1) >= 10 ? (startDateNs.getMonth() + 1) : '0' + (startDateNs.getMonth() + 1)) +
+        '-' + (startDateNs.getDate() >= 10 ? startDateNs.getDate() : '0' + startDateNs.getDate()) + ' ' + ((startDateNs.getHours()) >= 10 ? (startDateNs.getHours()) : '0' + (startDateNs.getHours())) +
+        ':' + (startDateNs.getMinutes() >= 10 ? startDateNs.getMinutes() : '0' + startDateNs.getMinutes()) + ':' + (startDateNs.getSeconds() >= 10 ? startDateNs.getSeconds() : '0' + startDateNs.getSeconds())
+      defalutEndTime = defalutStartTime
+      console.log([defalutStartTime, defalutEndTime])
+      return [defalutStartTime, defalutEndTime]
+    },
     handleCheckinDefaultTime() {
       this.checkininfoid = null
-      this.timeValue = this.timeDefault
+      this.timeValue = this.timeDefault()
       this.dialogVisible = true
     },
     handleCheckin() {

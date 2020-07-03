@@ -5,6 +5,8 @@
         <el-col :span="12">
           <p class="resource-title">文件资源</p>
           <p class="resource-course">课程：工程实践</p>
+          <i class="el-icon-s-promotion" style="font-size: 15px;padding: 15px 0 0 30px;margin-right:10px;color:blue;"> 资源管理</i>
+          <i class="el-icon-warning-outline" style="font-size: 15px;padding: 15px 0 0 30px;margin-right:10px;color:blue;"> 权限管理</i>
         </el-col>
         <el-col :span="12">
           <el-upload
@@ -20,7 +22,7 @@
     </el-card>
     <el-card style="margin:30px" shadow="always">
       <div class="resource-body">
-        <resource-card :fileNum="fileNum"/>
+        <resource-card :fileNum="fileNum" :file="file"/>
       </div>
     </el-card>
   </div>
@@ -41,7 +43,8 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       fileList: [],
-      fileNum: 0
+      fileNum: 0,
+      file: []
     }
   },
   created() {
@@ -59,16 +62,15 @@ export default {
       }
       getFilesByUserId(data).then(response => {
         const fileData = response.data
+        this.file = fileData
         this.fileNum = fileData.length
-        console.log(response)
       })
     },
     handleChange(file, fileList) {
       // console.log(file)
-      const fileData = {
-        file: file,
-        userId: this.userId
-      }
+      var fileData = new FormData()
+      fileData.append('file', file)
+      fileData.append('userId', this.userId)
       upload(fileData).then(response => {
         console.log(response)
       })

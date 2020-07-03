@@ -8,10 +8,26 @@ export function getFilesByUserId(params) {
   })
 }
 
-export function upload(data) {
+export function upload(params) {
   return request({
     url: '/file/upload',
     method: 'post',
-    data
+    params
+  })
+}
+
+export function downloadByFilepathId(params) {
+  return request({
+    url: '/file/downloadByFilepathId',
+    method: 'get',
+    params
+  })
+}
+
+export function deleteFileByFilepathId(params) {
+  return request({
+    url: '/file/deleteFileByFilepathId',
+    method: 'get',
+    params
   })
 }

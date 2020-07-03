@@ -1,10 +1,10 @@
 <template>
   <el-row>
-    <el-col :span="fileNum" v-for="(o, index) in fileNum" :key="o" :offset="index % 3 != 0 ? 2 : 0" style="padding-bottom: 25px">
+    <el-col :span="6" v-for="(o, index) in fileNum" :key="o" :offset="index % 3 != 0 ? 2 : 0" style="padding-bottom: 25px">
       <el-card :body-style="{ padding: '0px' }">
         <!--<img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">-->
         <el-row>
-          <el-col :span="6"><i class="el-icon-files" style="font-size: 30px;padding: 20px"></i></el-col>
+          <el-col :span="6"><i class="el-icon-files" style="font-size: 30px;padding: 20px;color:blue;"></i></el-col>
           <el-col :span="18">
             <div class="card-title">VUE</div>
             <div style="padding: 10px 5px 10px 0">文件简介文件简介文件简介文件简介文件简介</div>
@@ -13,8 +13,8 @@
         <el-row>
           <div style="padding: 5px 45px 14px 45px;background-color: #F2F6FC">
             <div class="bottom clearfix">
-              <el-button type="text" class="button-left">删除</el-button>
-              <el-button type="text" class="button-right">下载</el-button>
+              <el-button type="text" class="button-left" @click="handleDelete(index)">删除</el-button>
+              <el-button type="text" class="button-right" @click="handleDownload(index)">下载</el-button>
             </div>
           </div>
         </el-row>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { getFilesByUserId, downloadByFilepathId, deleteFileByFilepathId } from '@/api/resource'
 export default {
   name: 'ResourceCard',
   props: {
@@ -31,11 +32,47 @@ export default {
       default: 6,
       type: Number,
       deep: true
+    },
+    file: {
+      type: Array,
+      deep: true
     }
   },
   data() {
     return {
       currentDate: new Date()
+    }
+  },
+  methods: {
+    handleGetResource() {
+      const data = {
+        userId: this.userId
+      }
+      getFilesByUserId(data).then(response => {
+        const fileData = response.data
+        this.file = fileData
+        this.fileNum = fileData.length
+      })
+    },
+    handleDownload(index) {
+      const data = {
+        FilepathId: this.file[index].filepathid
+      }
+      downloadByFilepathId(data).then(response => {
+        console.log(response)
+      })
+    },
+    handleDelete(index) {
+      const data = {
+        filePathId: this.file[index].filepathid
+      }
+      deleteFileByFilepathId(data).then(response => {
+        this.$message({
+          message: response.msg,
+          type: 'success'
+        })
+        this.handleGetResource
+      })
     }
   }
 }
