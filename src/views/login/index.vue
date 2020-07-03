@@ -86,7 +86,7 @@ export default {
     return {
       autoLogin: false,
       loginForm: {
-        username: '13200000001',
+        username: '15900000001',
         password: '123456'
       },
       loginRules: {

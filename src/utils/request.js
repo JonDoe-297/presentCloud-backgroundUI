@@ -46,7 +46,6 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    console.log('hhh', response)
     const res = response.data
     // const res = response
     if (response.headers.authorization) {
@@ -59,7 +58,6 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-      console.log(res)
       if (res.code === 401) {
         Message({
           message: res.msg || 'Error',
