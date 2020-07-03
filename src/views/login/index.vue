@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">到云</h3>
       </div>
 
       <el-form-item prop="username">
@@ -40,13 +40,24 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
+      <el-row>
+        <el-col :span="12"><el-checkbox class="auto-login" v-model="autoLogin">自动登录</el-checkbox></el-col>
+        <el-col :span="12">
+          <!--<router-link to='/forgetPwd'>-->
+          <!--<el-button class="forget-password" type="text" @click="forgetPwd">忘记密码</el-button>-->
+          <!--</router-link>-->
+          <el-button class="forget-password" type="text" @click="handleForgetPwd">忘记密码</el-button>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12"><el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button></el-col>
+        <el-col :span="12"><el-button type="info" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleRegister">注册</el-button></el-col>
+      </el-row>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
+      <!--<div class="tips">-->
+        <!--<span style="margin-right:20px;">username: admin</span>-->
+        <!--<span> password: any</span>-->
+      <!--</div>-->
 
     </el-form>
   </div>
@@ -66,16 +77,17 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
+      if (value.length < 0) {
         callback(new Error('The password can not be less than 6 digits'))
       } else {
         callback()
       }
     }
     return {
+      autoLogin: false,
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '13200000000',
+        password: '123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -120,6 +132,12 @@ export default {
           return false
         }
       })
+    },
+    handleRegister() {
+      this.$router.push('/register')
+    },
+    handleForgetPwd() {
+      this.$router.push('/forgetPwd')
     }
   }
 }
@@ -191,7 +209,13 @@ $light_gray:#eee;
     margin: 0 auto;
     overflow: hidden;
   }
-
+  .auto-login{
+    margin-bottom: 20px;
+  }
+  .forget-password{
+    margin-top: -10px;
+    float: right;
+  }
   .tips {
     font-size: 14px;
     color: #fff;

@@ -26,7 +26,7 @@ const users = {
 export default [
   // user login
   {
-    url: '/vue-admin-template/user/login',
+    url: '/login',
     type: 'post',
     response: config => {
       const { username } = config.body
@@ -41,7 +41,7 @@ export default [
       }
 
       return {
-        code: 20000,
+        code: 200,
         data: token
       }
     }
@@ -49,7 +49,7 @@ export default [
 
   // get user info
   {
-    url: '/vue-admin-template/user/info\.*',
+    url: '/getInfo\.*',
     type: 'get',
     response: config => {
       const { token } = config.query
@@ -58,13 +58,13 @@ export default [
       // mock error
       if (!info) {
         return {
-          code: 50008,
+          code: 200,
           message: 'Login failed, unable to get user details.'
         }
       }
 
       return {
-        code: 20000,
+        code: 200,
         data: info
       }
     }
@@ -72,11 +72,11 @@ export default [
 
   // user logout
   {
-    url: '/vue-admin-template/user/logout',
+    url: '/logout',
     type: 'post',
     response: _ => {
       return {
-        code: 20000,
+        code: 200,
         data: 'success'
       }
     }

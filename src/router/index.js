@@ -36,10 +36,19 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
+  {
+    path: '/forgetPwd',
+    component: () => import('@/views/forget-pwd/index'),
+    hidden: true
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/register/index'),
+    hidden: true
+  },
   {
     path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import('@/views/error-page/404'),
     hidden: true
   },
 
@@ -55,27 +64,106 @@ export const constantRoutes = [
     }]
   },
 
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/table',
-  //   name: 'Example',
-  //   meta: { title: 'Example', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'table',
-  //       name: 'Table',
-  //       component: () => import('@/views/table/index'),
-  //       meta: { title: 'Table', icon: 'table' }
-  //     },
-  //     {
-  //       path: 'tree',
-  //       name: 'Tree',
-  //       component: () => import('@/views/tree/index'),
-  //       meta: { title: 'Tree', icon: 'tree' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/class',
+    component: Layout,
+    redirect: '/class/index',
+    name: 'Class',
+    meta: { title: '班课', icon: 'example' },
+    children: [
+      {
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/class/index'),
+        meta: { title: '班课查询', icon: 'course' }
+      },
+      {
+        path: 'detail',
+        name: 'Detail',
+        component: () => import('@/views/class/detail'),
+        meta: { title: '班课', icon: 'createCourse' },
+        hidden: true
+      },
+      {
+        path: 'create',
+        name: 'Create',
+        component: () => import('@/views/class/create'),
+        meta: { title: '创建班课', icon: 'createCourse' }
+      }
+    ]
+  },
+  {
+    path: '/systemManage',
+    component: Layout,
+    redirect: '/systemManage/dataDict',
+    name: 'SystemManage',
+    meta: { title: '系统管理', icon: 'system' },
+    children: [
+      {
+        path: 'dataDict',
+        name: 'DataDict',
+        component: () => import('@/views/data-dictionary/index'),
+        meta: { title: '数据字典', icon: 'dictionary' }
+      },
+      {
+        path: 'parameter',
+        name: 'Parameter',
+        component: () => import('@/views/parameter-management/index'),
+        meta: { title: '参数管理', icon: 'parameter' }
+      },
+      {
+        path: 'menuManage',
+        name: 'MenuManage',
+        component: () => import('@/views/menu-management/index'),
+        meta: { title: '菜单管理', icon: 'list' }
+      },
+      {
+        path: 'organize',
+        name: 'Organize',
+        component: () => import('@/views/organize/index'),
+        meta: { title: '组织管理', icon: 'organization' }
+      },
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/user-management/index'),
+        meta: { title: '用户管理', icon: 'user2' }
+      },
+      {
+        path: 'roleUser',
+        name: 'RoleUser',
+        component: () => import('@/views/role-management/index'),
+        meta: { title: '角色管理', icon: 'role' }
+      }
+    ]
+  },
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
+    name: 'Profile',
+    meta: { title: '个人中心', icon: 'user' },
+    children: [
+      {
+        path: 'resource',
+        name: 'Resource',
+        component: () => import('@/views/resource/index'),
+        meta: { title: '资源', icon: 'resource' }
+      },
+      {
+        path: 'info',
+        name: 'Info',
+        component: () => import('@/views/profile/index'),
+        meta: { title: '用户信息', icon: 'skill' }
+      },
+      {
+        path: 'setting',
+        name: 'Setting',
+        component: () => import('@/views/profile/setting'),
+        meta: { title: '设置', icon: 'edit' }
+      }
+    ]
+  },
 
   // {
   //   path: '/form',
@@ -84,7 +172,7 @@ export const constantRoutes = [
   //     {
   //       path: 'index',
   //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
+  //       component: () => import('@/views/error-page/500'),
   //       meta: { title: 'Form', icon: 'form' }
   //     }
   //   ]
