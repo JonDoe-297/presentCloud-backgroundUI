@@ -22,7 +22,8 @@
     </el-card>
     <el-card style="margin:30px" shadow="always">
       <div class="resource-body">
-        <resource-card :fileNum="fileNum" :file="file"/>
+        <resource-card v-if="fileNum !== 0" :fileNum="fileNum" :file="file"/>
+        <div v-else class="noresource-background">无文件资源</div>
       </div>
     </el-card>
   </div>
@@ -107,6 +108,17 @@ export default {
       /*height: 465px;*/
       height: 100%;
       /*background-color: #d9d9d9;*/
+      .noresource-background{
+        width:100%;
+        height:100px;
+        background-color: #E4E7ED;
+        line-height: 100px;
+        font-size: 25px;
+        font-family: "微软雅黑";
+        color: #C0C4CC;
+        text-align: center;
+        border-radius: 4px;
+      }
     }
     .upload-demo{
       float: right;
