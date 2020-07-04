@@ -117,7 +117,10 @@ export default {
       data.userId = this.userId
       data.className = this.form.name
       addClass(data).then(response => {
-        this.$message('submit!')
+        this.$message({
+          message: '创建成功！',
+          type: 'success'
+        })
       })
       this.$router.push('/class')
     },
