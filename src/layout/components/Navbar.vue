@@ -56,6 +56,7 @@ export default {
       // await this.$store.dispatch('user/logout')
       removeToken() // must remove  token  first
       resetRouter()
+      // this.$router.go(0)
       // commit('RESET_STATE')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }

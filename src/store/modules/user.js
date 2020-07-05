@@ -2,6 +2,7 @@ import { login, logout, getInfo, register } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import { Message } from 'element-ui'
+import Vue from "vue";
 
 const getDefaultState = () => {
   return {
@@ -21,12 +22,15 @@ const mutations = {
     state.token = token
   },
   SET_NAME: (state, name) => {
+    Vue.set(state, 'name', name)
     state.name = name
   },
   SET_ID: (state, id) => {
+    Vue.set(state, 'id', id)
     state.id = id
   },
   SET_ROLES: (state, roles) => {
+    Vue.set(state, 'roles', roles)
     state.roles = roles
   },
   SET_AVATAR: (state, avatar) => {
@@ -55,6 +59,9 @@ const actions = {
             duration: 5 * 1000
           })
         } else {
+          commit('SET_NAME', response.data.username)
+          commit('SET_ID', response.data.userid)
+          commit('SET_ROLES', response.data.roleList[0].role_description)
           commit('SET_TOKEN', response.token)
           setToken(response.token)
           resolve()
