@@ -28,6 +28,11 @@
           {{ scope.row.classname }}
         </template>
       </el-table-column>
+      <el-table-column align="center" label="课程号">
+        <template slot-scope="scope">
+          {{ scope.row.classnum }}
+        </template>
+      </el-table-column>
       <el-table-column label="学生人数" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.studentList.length }}</span>
