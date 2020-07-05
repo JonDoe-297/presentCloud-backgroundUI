@@ -53,11 +53,11 @@ service.interceptors.response.use(
     }
     // if the custom code is not 200, it is judged as an error.
     if (res.code !== 200 && res.code !== '200' && res.code !== '2001') {
-      Message({
-        message: res.message || res.msg || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
+      // Message({
+      //   message: res.message || res.msg || 'Error',
+      //   type: 'error',
+      //   duration: 5 * 1000
+      // })
       if (res.code === 401) {
         Message({
           message: res.msg || 'Error',

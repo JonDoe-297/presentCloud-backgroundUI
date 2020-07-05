@@ -10,6 +10,9 @@
           <el-form-item label="昵称">
             <el-input v-model="form.nickname" />
           </el-form-item>
+          <el-form-item label="角色">
+            <el-input disabled v-model="form.roles" />
+          </el-form-item>
           <el-form-item label="工号">
             <el-input v-model="form.id" />
           </el-form-item>
@@ -139,6 +142,7 @@ export default {
         this.form = {
           name: userData.username,
           nickname: '',
+          roles: userData.roleList[0].role_description,
           id: '',
           introduction: '',
           schoolValue: userData.userschool,

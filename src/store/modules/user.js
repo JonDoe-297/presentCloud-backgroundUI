@@ -1,6 +1,7 @@
 import { login, logout, getInfo, register } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { Message } from 'element-ui'
 
 const getDefaultState = () => {
   return {
@@ -46,9 +47,18 @@ const actions = {
         console.log('this login')
         console.log(response)
         // const { data } = response
-        commit('SET_TOKEN', response.token)
-        setToken(response.token)
-        resolve()
+        if (response.data.roleList[0].role_name === 'student') {
+          reject('学生账号禁止登入')
+          Message({
+            message: '学生账号禁止登入',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        } else {
+          commit('SET_TOKEN', response.token)
+          setToken(response.token)
+          resolve()
+        }
       }).catch(error => {
         reject(error)
       })

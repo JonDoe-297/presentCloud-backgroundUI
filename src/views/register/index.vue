@@ -128,7 +128,7 @@ export default {
     }
     const validateSno = (rule, value, callback) => {
       if (!validSno(value)) {
-        callback(new Error('请输入正确的工号！'))
+        callback(new Error('请输入正确的9位工号！'))
       } else {
         callback()
       }

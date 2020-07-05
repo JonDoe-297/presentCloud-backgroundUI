@@ -185,13 +185,11 @@ export default {
         classNum: num
       }
       getCheckinInfoList(data).then(response => {
-        // this.list = response.data.studentList
-        // console.log('getCheckinInfoList', response)
-        this.checkininfoid = response.data[response.data.length - 1].checkininfoid
-        // const studentList = this.list.studentList
+        if (response.code === '200') {
+          this.checkininfoid = response.data[response.data.length - 1].checkininfoid
+        }
         this.listLoading = false
       })
-      console.log(this.checkininfoid)
       if (this.checkininfoid) {
         const data = {
           classNum: num,
@@ -199,7 +197,6 @@ export default {
         }
         getCheckinResult(data).then(response => {
           this.list = response.data
-          console.log('getCheckinResult', response)
           // const studentList = this.list.studentList
           this.listLoading = false
         })
