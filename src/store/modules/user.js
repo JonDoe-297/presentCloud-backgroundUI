@@ -59,9 +59,11 @@ const actions = {
             duration: 5 * 1000
           })
         } else {
+          const avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
           commit('SET_NAME', response.data.username)
           commit('SET_ID', response.data.userid)
           commit('SET_ROLES', response.data.roleList[0].role_description)
+          commit('SET_AVATAR', avatar)
           commit('SET_TOKEN', response.token)
           setToken(response.token)
           resolve()
