@@ -151,8 +151,11 @@ export default {
       })
     },
     onSubmit() {
-      this.$message('更新成功!')
-      this.$router.push('/class')
+      this.$message({
+        message: '更新成功!',
+        type: 'success'
+      })
+      // this.$router.push('/class')
     }
   }
 }
