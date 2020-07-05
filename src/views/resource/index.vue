@@ -12,7 +12,7 @@
           <el-upload
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
-            :on-change="handleChange"
+            :on-change="handleUpload"
             :file-list="fileList"
           >
             <el-button size="small" type="primary">点击上传</el-button>
@@ -22,7 +22,7 @@
     </el-card>
     <el-card style="margin:30px" shadow="always">
       <div class="resource-body">
-        <resource-card v-if="fileNum !== 0" :fileNum="fileNum" :file="file"/>
+        <resource-card v-if="fileNum !== 0" :file-num="fileNum" :file="file" />
         <div v-else class="noresource-background">无文件资源</div>
       </div>
     </el-card>
@@ -67,11 +67,16 @@ export default {
         this.fileNum = fileData.length
       })
     },
-    handleChange(file, fileList) {
-      // console.log(file)
-      var fileData = new FormData()
+    handleUpload(file, fileList) {
+      console.log(file)
+      const fileData = new window.FormData()
       fileData.append('file', file)
       fileData.append('userId', this.userId)
+      // const fileData = {
+      //   file: file,
+      //   userId: this.userId
+      // }
+      // console.log(fileData.get('userId'))
       upload(fileData).then(response => {
         console.log(response)
       })
